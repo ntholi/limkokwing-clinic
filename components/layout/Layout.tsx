@@ -1,5 +1,5 @@
 import { AppShell, Header, Footer, Text } from '@mantine/core';
-import SideNav from './SideNav';
+import Nav from './Nav';
 
 type Props = {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ function Layout({ children }: Props) {
           </div>
         </Header>
       }
-      navbar={<SideNav />}
+      navbar={<Nav />}
       footer={
         <Footer height={60} p='md'>
           <Text size='xs'>@TheLeast 2022</Text>
