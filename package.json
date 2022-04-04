@@ -9,7 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^4.1.2",
+    "@mantine/dates": "^4.1.2",
+    "@mantine/form": "^4.1.2",
+    "@mantine/hooks": "^4.1.2",
+    "@mantine/modals": "^4.1.2",
     "@mantine/next": "^4.1.2",
+    "@mantine/notifications": "^4.1.2",
+    "@mantine/spotlight": "^4.1.2",
+    "dayjs": "^1.11.0",
     "next": "12.1.4",
     "react": "18.0.0",
     "react-dom": "18.0.0"
