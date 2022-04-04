@@ -1,3 +1,5 @@
+import { ActionIcon, Group } from '@mantine/core';
+import { Edit, FormEdit, FormTrash } from 'grommet-icons';
 import React from 'react';
 import Patient from './patient';
 
@@ -12,6 +14,16 @@ function Row({ item }: Props) {
       <td>{item.firstName}</td>
       <td>{item.occupation}</td>
       <td>{calculateAge(item.dateOfBirth)}</td>
+      <td>
+        <Group>
+          <ActionIcon>
+            <FormEdit />
+          </ActionIcon>
+          <ActionIcon>
+            <FormTrash color='red' />
+          </ActionIcon>
+        </Group>
+      </td>
     </tr>
   );
 }

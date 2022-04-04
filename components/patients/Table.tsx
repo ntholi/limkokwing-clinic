@@ -13,7 +13,7 @@ function PatientsTable() {
 
   return (
     <>
-      <Table>
+      <Table verticalSpacing='sm' fontSize='md'>
         <thead>
           <tr>
             <th>ID</th>
@@ -21,6 +21,7 @@ function PatientsTable() {
             <th>Last Name</th>
             <th>Occupation</th>
             <th>Age</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
