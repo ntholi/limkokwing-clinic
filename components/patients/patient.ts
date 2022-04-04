@@ -1,5 +1,5 @@
 export default interface Patient {
-  id?: string;
+  id: string;
   firstName: string;
   lastName: string;
   dateOfBirth?: Date;

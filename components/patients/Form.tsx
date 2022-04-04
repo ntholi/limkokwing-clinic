@@ -12,6 +12,7 @@ type Props = {
 function Form({ patient, setOpened }: Props) {
   const form = useForm<Patient>({
     initialValues: {
+      id: '',
       firstName: '',
       lastName: '',
       occupation: 'Student',
@@ -20,7 +21,6 @@ function Form({ patient, setOpened }: Props) {
 
   function handleSubmit(value: Patient) {
     try {
-      console.log(value);
       savePatient(value);
       form.reset();
       setOpened(false);
@@ -32,6 +32,12 @@ function Form({ patient, setOpened }: Props) {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
+        <TextInput
+          required
+          label='ID'
+          placeholder='Emp/Std Number'
+          {...form.getInputProps('id')}
+        />
         <TextInput
           required
           label='First Name'
