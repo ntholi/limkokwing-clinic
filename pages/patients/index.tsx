@@ -2,6 +2,7 @@ import { Button, Modal, Paper } from '@mantine/core';
 import React, { useState } from 'react';
 import Layout from '../../components/layout/Layout';
 import Form from '../../components/patients/Form';
+import PatientsTable from '../../components/patients/Table';
 
 function Index() {
   const [opened, setOpened] = useState(false);
@@ -20,6 +21,7 @@ function Index() {
             New
           </Button>
         </Paper>
+        <PatientsTable />
       </Layout>
     </>
   );

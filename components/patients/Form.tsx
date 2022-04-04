@@ -1,7 +1,7 @@
 import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import React, { useState } from 'react';
+import React from 'react';
 import Patient from './patient';
 import { savePatient } from './patient-service';
 

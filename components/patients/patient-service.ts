@@ -13,7 +13,12 @@ export const loadPatients = (setPatients: (patients: Patient[]) => void) => {
   return onSnapshot(collection(firestore, 'patients'), (snapshot) => {
     const patients: Patient[] = [];
     snapshot.forEach((document) => {
-      patients.push(document.data() as Patient);
+      const patient = document.data();
+      patient.id = document.id;
+      if (patient.dateOfBirth && patient.dateOfBirth.toDate) {
+        patient.dateOfBirth = patient.dateOfBirth.toDate();
+      }
+      patients.push(patient as Patient);
     });
     setPatients(patients);
   });
