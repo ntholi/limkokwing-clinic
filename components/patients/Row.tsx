@@ -1,37 +1,62 @@
-import { ActionIcon, Group } from '@mantine/core';
-import { Edit, FormEdit, FormTrash } from 'grommet-icons';
-import React from 'react';
+import { ActionIcon, Button, Group, Modal, Text } from '@mantine/core';
+import { FormEdit, FormTrash } from 'grommet-icons';
+import React, { useState } from 'react';
 import Patient from './patient';
+import { deletePatient } from './patient-service';
 
 type Props = {
   item: Patient;
   setPatient: (patient: Patient | null) => void;
   setOpenForm: (opened: boolean) => void;
 };
+
 function Row({ item, setPatient, setOpenForm }: Props) {
+  const [opened, setOpened] = useState(false);
   function handleEdit() {
     setPatient(item);
     setOpenForm(true);
   }
 
+  function handleDelete() {
+    deletePatient(item.id);
+    setOpened(false);
+  }
+
   return (
-    <tr>
-      <td>{item.id}</td>
-      <td>{item.firstName}</td>
-      <td>{item.firstName}</td>
-      <td>{item.occupation}</td>
-      <td>{calculateAge(item.dateOfBirth)}</td>
-      <td>
-        <Group>
-          <ActionIcon onClick={handleEdit}>
-            <FormEdit />
-          </ActionIcon>
-          <ActionIcon>
-            <FormTrash color='red' />
-          </ActionIcon>
+    <>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title='Confirm Delete'
+      >
+        <Text>
+          Do you want to delete {item.firstName} {item.lastName}?
+        </Text>
+        <Group position='right' mt={30}>
+          <Button color='red' onClick={handleDelete}>
+            Delete
+          </Button>
+          <Button onClick={() => setOpened(false)}>Cancel</Button>
         </Group>
-      </td>
-    </tr>
+      </Modal>
+      <tr>
+        <td>{item.id}</td>
+        <td>{item.firstName}</td>
+        <td>{item.firstName}</td>
+        <td>{item.occupation}</td>
+        <td>{calculateAge(item.dateOfBirth)}</td>
+        <td>
+          <Group>
+            <ActionIcon onClick={handleEdit}>
+              <FormEdit />
+            </ActionIcon>
+            <ActionIcon onClick={() => setOpened(true)}>
+              <FormTrash color='red' />
+            </ActionIcon>
+          </Group>
+        </td>
+      </tr>
+    </>
   );
 }
 

@@ -12,7 +12,6 @@ type Props = {
 function PatientsTable({ setPatient, setOpenForm }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
   useEffect(() => {
-    console.log('Loading patients...');
     return loadPatients(setPatients);
   }, []);
 
