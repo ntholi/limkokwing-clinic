@@ -31,7 +31,7 @@ function Nav() {
         <NavItem
           label='Appointments'
           icon={<FaStethoscope size={24} />}
-          path={'/patients'}
+          path={'/appointments'}
         />
       </Navbar.Section>
       <Navbar.Section mt={10}>
