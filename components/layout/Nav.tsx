@@ -1,5 +1,8 @@
 import { Navbar, Text, Group, UnstyledButton } from '@mantine/core';
-import { Home, Icon } from 'grommet-icons';
+import { Home, Icon, Logout } from 'grommet-icons';
+import { AiFillMedicineBox, AiOutlineMedicineBox } from 'react-icons/ai';
+import { FaStethoscope } from 'react-icons/fa';
+import { BsPeople } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -24,11 +27,32 @@ function NavItem({ label, icon, path }: NavProps) {
 function Nav() {
   return (
     <Navbar p='md' width={{ sm: 200, lg: 300 }}>
-      <Navbar.Section grow>
-        <NavItem label='Patients' icon={<Home />} path={'/patients'} />
+      <Navbar.Section>
+        <NavItem
+          label='Appointments'
+          icon={<FaStethoscope size={24} />}
+          path={'/patients'}
+        />
+      </Navbar.Section>
+      <Navbar.Section mt={10}>
+        <NavItem
+          label='Medication'
+          icon={<AiOutlineMedicineBox size={24} />}
+          path={'/medication'}
+        />
+      </Navbar.Section>
+      <Navbar.Section mt={10} grow>
+        <NavItem
+          label='Patients'
+          icon={<BsPeople size={24} />}
+          path={'/patients'}
+        />
       </Navbar.Section>
       <Navbar.Section>
-        <Text size='sm'>Logout</Text>
+        <Group>
+          <Logout />
+          <Text>Logout</Text>
+        </Group>
       </Navbar.Section>
     </Navbar>
   );

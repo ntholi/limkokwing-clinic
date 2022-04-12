@@ -1,4 +1,12 @@
-import { AppShell, Header, Footer, Text, Anchor } from '@mantine/core';
+import {
+  AppShell,
+  Header,
+  Footer,
+  Image,
+  Anchor,
+  Text,
+  Group,
+} from '@mantine/core';
 import { Github } from 'grommet-icons';
 import Nav from './Nav';
 
@@ -13,11 +21,12 @@ function Layout({ children }: Props) {
       padding={0}
       header={
         <Header height={70} p='md'>
-          <div
-            style={{ display: 'flex', alignItems: 'center', height: '100%' }}
-          >
-            <h3>Hello Logo</h3>
-          </div>
+          <Group>
+            <Image src='/images/logo.png' width={120} height={50} alt='Logo' />
+            <Text size='xl' weight='bold'>
+              Clinic
+            </Text>
+          </Group>
         </Header>
       }
       navbar={<Nav />}
@@ -30,7 +39,7 @@ function Layout({ children }: Props) {
           <Github />
           <Anchor
             ml={5}
-            size='xs'
+            size='sm'
             href='https://github.com/ntholi/clinic'
             target='_blank'
           >

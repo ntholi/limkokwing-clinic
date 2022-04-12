@@ -6,7 +6,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Center>
-        <h4>Hello World</h4>
+        <h4>Welcome</h4>
       </Center>
     </Layout>
   );
