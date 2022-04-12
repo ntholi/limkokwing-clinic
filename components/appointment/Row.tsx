@@ -1,5 +1,6 @@
 import { ActionIcon, Button, Group, Modal, Paper, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
+import { FieldValue } from 'firebase/firestore';
 import { FormEdit, FormTrash } from 'grommet-icons';
 import React, { useState } from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
@@ -27,7 +28,7 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
     <>
       <tr>
         <td>{item.patient}</td>
-        <td>{item.date}</td>
+        <td>{asString(item.date)}</td>
         <td>{item.diagnosis}</td>
         <td>{item.attendedBy}</td>
         <td>{item.medication}</td>
@@ -53,17 +54,8 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
   );
 }
 
-function calculateAge(dateOfBirth: Date | undefined) {
-  if (!dateOfBirth) {
-    return 'N/A';
-  }
-  const now = new Date();
-  const age = now.getFullYear() - dateOfBirth.getFullYear();
-  const month = now.getMonth() - dateOfBirth.getMonth();
-  if (month < 0 || (month === 0 && now.getDate() < dateOfBirth.getDate())) {
-    return age - 1;
-  }
-  return age;
+function asString(date: any) {
+  return new Date(date.seconds * 1000).toLocaleDateString();
 }
 
 export default Row;

@@ -26,6 +26,7 @@ function AppointmentsTable({ setAppointment, setOpenForm }: Props) {
             <th>Attended By</th>
             <th>Medication</th>
             <th>Notes</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

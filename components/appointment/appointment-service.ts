@@ -28,16 +28,14 @@ export const loadAppointments = (
 };
 
 export const saveAppointment = async (appointment: Appointment) => {
-  if (appointment.id) {
-    await addDoc(collection(firestore, 'appointments', appointment.id), {
-      date: serverTimestamp(),
-      patient: appointment.patient,
-      diagnosis: appointment.diagnosis,
-      medication: appointment.medication,
-      notes: appointment.notes,
-      attendedBy: appointment.attendedBy,
-    });
-  }
+  await addDoc(collection(firestore, 'appointments'), {
+    date: serverTimestamp(),
+    patient: appointment.patient,
+    diagnosis: appointment.diagnosis,
+    medication: appointment.medication,
+    notes: appointment.notes,
+    attendedBy: appointment.attendedBy,
+  });
 };
 
 export const updateAppointment = async (

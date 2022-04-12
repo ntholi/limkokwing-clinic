@@ -29,12 +29,13 @@ function Form({ appointment, setOpened }: Props) {
     }
   }, [appointment]);
 
-  function handleSubmit(value: Appointment) {
+  async function handleSubmit(value: Appointment) {
+    console.log('Handle submit -> ', appointment);
     try {
       if (appointment) {
-        updateAppointment(appointment.id, value);
+        await updateAppointment(appointment.id, value);
       } else {
-        saveAppointment(value);
+        await saveAppointment(value);
       }
       form.reset();
       setOpened(false);

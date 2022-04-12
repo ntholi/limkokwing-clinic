@@ -25,12 +25,12 @@ function Form({ patient, setOpened }: Props) {
     }
   }, [patient]);
 
-  function handleSubmit(value: Patient) {
+  async function handleSubmit(value: Patient) {
     try {
       if (patient) {
-        updatePatient(patient.id, value);
+        await updatePatient(patient.id, value);
       } else {
-        savePatient(value);
+        await savePatient(value);
       }
       form.reset();
       setOpened(false);
