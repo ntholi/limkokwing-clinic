@@ -1,6 +1,8 @@
-import { ActionIcon, Button, Group, Modal, Text } from '@mantine/core';
+import { ActionIcon, Button, Group, Modal, Paper, Text } from '@mantine/core';
+import { useModals } from '@mantine/modals';
 import { FormEdit, FormTrash } from 'grommet-icons';
 import React, { useState } from 'react';
+import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Patient from './patient';
 import { deletePatient } from './patient-service';
 
@@ -12,6 +14,8 @@ type Props = {
 
 function Row({ item, setPatient, setOpenForm }: Props) {
   const [opened, setOpened] = useState(false);
+  const modals = useModals();
+
   function handleEdit() {
     setPatient(item);
     setOpenForm(true);
@@ -21,24 +25,8 @@ function Row({ item, setPatient, setOpenForm }: Props) {
     deletePatient(item.id);
     setOpened(false);
   }
-
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title='Confirm Delete'
-      >
-        <Text>
-          Do you want to delete {item.firstName} {item.lastName}?
-        </Text>
-        <Group position='right' mt={30}>
-          <Button color='red' onClick={handleDelete}>
-            Delete
-          </Button>
-          <Button onClick={() => setOpened(false)}>Cancel</Button>
-        </Group>
-      </Modal>
       <tr>
         <td>{item.id}</td>
         <td>{item.firstName}</td>
@@ -50,7 +38,13 @@ function Row({ item, setPatient, setOpenForm }: Props) {
             <ActionIcon onClick={handleEdit}>
               <FormEdit />
             </ActionIcon>
-            <ActionIcon onClick={() => setOpened(true)}>
+            <ActionIcon
+              onClick={() =>
+                modals.openConfirmModal(
+                  getConfirmDeleteProps(item.firstName, handleDelete)
+                )
+              }
+            >
               <FormTrash color='red' />
             </ActionIcon>
           </Group>
