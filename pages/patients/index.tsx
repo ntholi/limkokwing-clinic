@@ -8,6 +8,11 @@ import PatientsTable from '../../components/patients/Table';
 function Index() {
   const [opened, setOpened] = useState(false);
   const [patient, setPatient] = useState<Patient | null>(null);
+
+  function openForm() {
+    setPatient(null);
+    setOpened(true);
+  }
   return (
     <>
       <Modal
@@ -19,7 +24,7 @@ function Index() {
       </Modal>
       <Layout>
         <Paper shadow='sm' p='md' withBorder>
-          <Button variant='default' onClick={() => setOpened(true)}>
+          <Button variant='default' onClick={openForm}>
             New
           </Button>
         </Paper>

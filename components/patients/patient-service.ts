@@ -3,11 +3,16 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   onSnapshot,
   runTransaction,
   setDoc,
 } from 'firebase/firestore';
 import { firestore } from '../firebase/config';
+
+export async function getPatient(id: string): Promise<Patient> {
+  return (await getDoc(doc(firestore, 'patients', id))).data() as Patient;
+}
 
 export const loadPatients = (setPatients: (patients: Patient[]) => void) => {
   return onSnapshot(collection(firestore, 'patients'), (snapshot) => {

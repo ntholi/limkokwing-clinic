@@ -8,6 +8,12 @@ import Layout from '../../components/layout/Layout';
 function AppointmentIndex() {
   const [opened, setOpened] = useState(false);
   const [appointment, setAppointment] = useState<Appointment | null>(null);
+
+  function openForm() {
+    setAppointment(null);
+    setOpened(true);
+  }
+
   return (
     <>
       <Modal
@@ -19,7 +25,7 @@ function AppointmentIndex() {
       </Modal>
       <Layout>
         <Paper shadow='sm' p='md' withBorder>
-          <Button variant='default' onClick={() => setOpened(true)}>
+          <Button variant='default' onClick={openForm}>
             New
           </Button>
         </Paper>

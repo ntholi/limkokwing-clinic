@@ -1,8 +1,19 @@
-import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Group,
+  Modal,
+  Select,
+  Stack,
+  Textarea,
+  TextInput,
+} from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { serverTimestamp } from 'firebase/firestore';
-import React, { useEffect } from 'react';
+import { Search } from 'grommet-icons';
+import React, { useEffect, useState } from 'react';
+import { getPatient } from '../patients/patient-service';
 import Appointment from './appointment';
 import { saveAppointment, updateAppointment } from './appointment-service';
 
@@ -11,6 +22,7 @@ type Props = {
   setOpened: (opened: boolean) => void;
 };
 function Form({ appointment, setOpened }: Props) {
+  const [patientNames, setPatientNames] = useState<string>('');
   const form = useForm<Appointment>({
     initialValues: {
       id: '',
@@ -29,8 +41,13 @@ function Form({ appointment, setOpened }: Props) {
     }
   }, [appointment]);
 
+  function lookupUpPatient() {
+    getPatient(form.values['patient']).then((patient) => {
+      setPatientNames(`${patient.firstName} ${patient.lastName}`);
+    });
+  }
+
   async function handleSubmit(value: Appointment) {
-    console.log('Handle submit -> ', appointment);
     try {
       if (appointment) {
         await updateAppointment(appointment.id, value);
@@ -47,33 +64,37 @@ function Form({ appointment, setOpened }: Props) {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
-        <DatePicker
+        <Group>
+          <TextInput
+            sx={{ width: '46%' }}
+            label='Patient'
+            placeholder='Student No./Emp No.'
+            {...form.getInputProps('patient')}
+            rightSection={
+              <ActionIcon onClick={lookupUpPatient}>
+                <Search />
+              </ActionIcon>
+            }
+          />
+          <TextInput
+            required
+            label=' '
+            placeholder='Patient Names'
+            value={patientNames}
+            disabled
+          />
+        </Group>
+        {/* <DatePicker
           label='Date'
           placeholder='Leave Blank'
           {...form.getInputProps('date')}
-        />
-        <TextInput
-          required
-          label='Patient'
-          placeholder='Student No./Emp No.'
-          {...form.getInputProps('patient')}
-        />
-        <TextInput
-          required
-          label='Diagnosis'
-          {...form.getInputProps('diagnosis')}
-        />
-        <TextInput
-          required
-          label='Attended By'
-          {...form.getInputProps('attendedBy')}
-        />
-        <TextInput
-          required
-          label='Medication'
-          {...form.getInputProps('medication')}
-        />
-        <TextInput required label='Notes' {...form.getInputProps('notes')} />
+        /> */}
+        <Group>
+          <TextInput label='Diagnosis' {...form.getInputProps('diagnosis')} />
+          <TextInput label='Medication' {...form.getInputProps('medication')} />
+        </Group>
+        <TextInput label='Attended By' {...form.getInputProps('attendedBy')} />
+        <Textarea label='Notes' {...form.getInputProps('notes')} />
       </Stack>
 
       <Group position='right' mt='md'>
