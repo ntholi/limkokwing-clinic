@@ -5,8 +5,15 @@ import Patient from './patient';
 
 type Props = {
   item: Patient;
+  setPatient: (patient: Patient | null) => void;
+  setOpenForm: (opened: boolean) => void;
 };
-function Row({ item }: Props) {
+function Row({ item, setPatient, setOpenForm }: Props) {
+  function handleEdit() {
+    setPatient(item);
+    setOpenForm(true);
+  }
+
   return (
     <tr>
       <td>{item.id}</td>
@@ -16,7 +23,7 @@ function Row({ item }: Props) {
       <td>{calculateAge(item.dateOfBirth)}</td>
       <td>
         <Group>
-          <ActionIcon>
+          <ActionIcon onClick={handleEdit}>
             <FormEdit />
           </ActionIcon>
           <ActionIcon>

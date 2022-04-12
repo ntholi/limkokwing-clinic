@@ -4,7 +4,12 @@ import Patient from './patient';
 import { loadPatients } from './patient-service';
 import Row from './Row';
 
-function PatientsTable() {
+type Props = {
+  setPatient: (patient: Patient | null) => void;
+  setOpenForm: (opened: boolean) => void;
+};
+
+function PatientsTable({ setPatient, setOpenForm }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
   useEffect(() => {
     console.log('Loading patients...');
@@ -26,7 +31,12 @@ function PatientsTable() {
         </thead>
         <tbody>
           {patients.map((item) => (
-            <Row key={item.id} item={item} />
+            <Row
+              key={item.id}
+              item={item}
+              setPatient={setPatient}
+              setOpenForm={setOpenForm}
+            />
           ))}
         </tbody>
       </Table>

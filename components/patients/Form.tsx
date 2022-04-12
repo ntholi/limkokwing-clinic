@@ -1,12 +1,12 @@
 import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Patient from './patient';
-import { savePatient } from './patient-service';
+import { savePatient, updatePatient } from './patient-service';
 
 type Props = {
-  patient?: Patient;
+  patient?: Patient | null;
   setOpened: (opened: boolean) => void;
 };
 function Form({ patient, setOpened }: Props) {
@@ -19,9 +19,19 @@ function Form({ patient, setOpened }: Props) {
     },
   });
 
+  useEffect(() => {
+    if (patient) {
+      form.setValues(patient);
+    }
+  }, [patient]);
+
   function handleSubmit(value: Patient) {
     try {
-      savePatient(value);
+      if (patient) {
+        updatePatient(patient.id, value);
+      } else {
+        savePatient(value);
+      }
       form.reset();
       setOpened(false);
     } catch (e) {
