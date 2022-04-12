@@ -1,4 +1,5 @@
-import { AppShell, Header, Footer, Text } from '@mantine/core';
+import { AppShell, Header, Footer, Text, Anchor } from '@mantine/core';
+import { Github } from 'grommet-icons';
 import Nav from './Nav';
 
 type Props = {
@@ -21,8 +22,20 @@ function Layout({ children }: Props) {
       }
       navbar={<Nav />}
       footer={
-        <Footer height={60} p='md'>
-          <Text size='xs'>@TheLeast 2022</Text>
+        <Footer
+          height={60}
+          style={{ display: 'flex', alignItems: 'center' }}
+          p='md'
+        >
+          <Github />
+          <Anchor
+            ml={5}
+            size='xs'
+            href='https://github.com/ntholi/clinic'
+            target='_blank'
+          >
+            @ntholi/clinic
+          </Anchor>
         </Footer>
       }
     >

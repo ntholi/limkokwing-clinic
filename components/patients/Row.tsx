@@ -13,7 +13,6 @@ type Props = {
 };
 
 function Row({ item, setPatient, setOpenForm }: Props) {
-  const [opened, setOpened] = useState(false);
   const modals = useModals();
 
   function handleEdit() {
@@ -23,14 +22,13 @@ function Row({ item, setPatient, setOpenForm }: Props) {
 
   function handleDelete() {
     deletePatient(item.id);
-    setOpened(false);
   }
   return (
     <>
       <tr>
         <td>{item.id}</td>
         <td>{item.firstName}</td>
-        <td>{item.firstName}</td>
+        <td>{item.lastName}</td>
         <td>{item.occupation}</td>
         <td>{calculateAge(item.dateOfBirth)}</td>
         <td>
