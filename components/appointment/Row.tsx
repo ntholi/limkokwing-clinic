@@ -1,7 +1,16 @@
-import { ActionIcon, Button, Group, Modal, Paper, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Group,
+  Modal,
+  Paper,
+  Text,
+  UnstyledButton,
+} from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { FieldValue } from 'firebase/firestore';
 import { FormEdit, FormTrash } from 'grommet-icons';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Appointment from './appointment';
@@ -9,25 +18,37 @@ import { deleteAppointment } from './appointment-service';
 
 type Props = {
   item: Appointment;
-  setAppointment: (appointment: Appointment | null) => void;
-  setOpenForm: (opened: boolean) => void;
+  setAppointment?: (appointment: Appointment | null) => void;
+  setOpenForm?: (opened: boolean) => void;
 };
 
 function Row({ item, setAppointment, setOpenForm }: Props) {
   const modals = useModals();
+  const router = useRouter();
 
   function handleEdit() {
-    setAppointment(item);
-    setOpenForm(true);
+    if (setAppointment && setOpenForm) {
+      setAppointment(item);
+      setOpenForm(true);
+    }
   }
 
   function handleDelete() {
     deleteAppointment(item.id);
   }
+
+  function gotoProfile() {
+    router.push(`/patients/${item.patient}`);
+  }
+
   return (
     <>
       <tr>
-        <td>{item.patient}</td>
+        <td>
+          <UnstyledButton onClick={gotoProfile}>
+            <Text variant='link'>{item.patient}</Text>
+          </UnstyledButton>
+        </td>
         <td>{asString(item.date)}</td>
         <td>{item.diagnosis}</td>
         <td>{item.attendedBy}</td>

@@ -1,6 +1,17 @@
-import { ActionIcon, Button, Group, Modal, Paper, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Anchor,
+  Button,
+  Group,
+  Modal,
+  Paper,
+  Text,
+  UnstyledButton,
+} from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { FormEdit, FormTrash } from 'grommet-icons';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Patient from './patient';
@@ -14,6 +25,7 @@ type Props = {
 
 function Row({ item, setPatient, setOpenForm }: Props) {
   const modals = useModals();
+  const router = useRouter();
 
   function handleEdit() {
     setPatient(item);
@@ -23,10 +35,19 @@ function Row({ item, setPatient, setOpenForm }: Props) {
   function handleDelete() {
     deletePatient(item.id);
   }
+
+  function gotoProfile() {
+    router.push(`/patients/${item.id}`);
+  }
+
   return (
     <>
       <tr>
-        <td>{item.id}</td>
+        <td>
+          <UnstyledButton onClick={gotoProfile}>
+            <Text variant='link'>{item.id}</Text>
+          </UnstyledButton>
+        </td>
         <td>{item.firstName}</td>
         <td>{item.lastName}</td>
         <td>{item.occupation}</td>
