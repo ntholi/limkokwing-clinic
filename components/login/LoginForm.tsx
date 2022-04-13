@@ -8,6 +8,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+import { MdAlternateEmail } from 'react-icons/md';
 
 function LoginForm() {
   const form = useForm({
@@ -24,6 +25,8 @@ function LoginForm() {
         <TextInput
           label='Email'
           placeholder='Email'
+          type='email'
+          icon={<MdAlternateEmail />}
           {...form.getInputProps('email')}
         />
         <PasswordInput
