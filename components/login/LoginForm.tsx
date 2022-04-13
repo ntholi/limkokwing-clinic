@@ -4,7 +4,6 @@ import {
   Group,
   Button,
   Box,
-  Input,
   TextInput,
   Title,
 } from '@mantine/core';

@@ -1,7 +1,6 @@
 import {
   AppShell,
   Header,
-  Footer,
   Image,
   Anchor,
   Text,
@@ -9,6 +8,7 @@ import {
   Center,
 } from '@mantine/core';
 import { Github } from 'grommet-icons';
+import Footer from '../components/layout/Footer';
 import LoginForm from '../components/login/LoginForm';
 
 function LoginPage() {
@@ -26,23 +26,7 @@ function LoginPage() {
           </Group>
         </Header>
       }
-      footer={
-        <Footer
-          height={60}
-          style={{ display: 'flex', alignItems: 'center' }}
-          p='md'
-        >
-          <Github />
-          <Anchor
-            ml={5}
-            size='sm'
-            href='https://github.com/ntholi/clinic'
-            target='_blank'
-          >
-            @ntholi/clinic
-          </Anchor>
-        </Footer>
-      }
+      footer={<Footer />}
     >
       <Center>
         <LoginForm />

@@ -1,0 +1,25 @@
+import { Footer as MantineFooter, Anchor } from '@mantine/core';
+import { Github } from 'grommet-icons';
+import { FaGithub } from 'react-icons/fa';
+
+function Footer() {
+  return (
+    <MantineFooter
+      height={60}
+      style={{ display: 'flex', alignItems: 'center' }}
+      p='md'
+    >
+      <FaGithub />
+      <Anchor
+        ml={5}
+        size='sm'
+        href='https://github.com/ntholi/clinic'
+        target='_blank'
+      >
+        @ntholi/clinic
+      </Anchor>
+    </MantineFooter>
+  );
+}
+
+export default Footer;

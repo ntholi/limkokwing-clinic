@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Select, Stack, TextInput } from '@mantine/core';
+import { Button, Group, Select, Stack, TextInput } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import React, { useEffect } from 'react';
