@@ -1,4 +1,12 @@
-import { Button, Group, Select, Stack, TextInput } from '@mantine/core';
+import {
+  Button,
+  Group,
+  Select,
+  Stack,
+  TextInput,
+  Chips,
+  Chip,
+} from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import React, { useEffect } from 'react';
@@ -65,17 +73,21 @@ function Form({ patient, setOpened }: Props) {
           placeholder='Pick a date'
           {...form.getInputProps('dateOfBirth')}
         />
-
         <Select
           required
           label='Occupation'
           data={['Student', 'Staff Member', 'Other']}
           {...form.getInputProps('occupation')}
         />
+
+        <Chips {...form.getInputProps('gender')}>
+          <Chip value='Male'>Male</Chip>
+          <Chip value='Female'>Female</Chip>
+        </Chips>
       </Stack>
 
       <Group position='right' mt='md'>
-        <Button type='submit'>Submit</Button>
+        <Button type='submit'>Save</Button>
       </Group>
     </form>
   );

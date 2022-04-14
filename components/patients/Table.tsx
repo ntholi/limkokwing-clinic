@@ -23,6 +23,7 @@ function PatientsTable({ setPatient, setOpenForm }: Props) {
             <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Gender</th>
             <th>Occupation</th>
             <th>Age</th>
             <th></th>

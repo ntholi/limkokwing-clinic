@@ -34,6 +34,7 @@ export const savePatient = async (patient: Patient) => {
     await setDoc(doc(firestore, 'patients', patient.id), {
       firstName: patient.firstName,
       lastName: patient.lastName,
+      gender: patient.gender,
       dateOfBirth: patient.dateOfBirth,
       occupation: patient.occupation,
     });

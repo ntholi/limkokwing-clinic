@@ -50,6 +50,7 @@ function Row({ item, setPatient, setOpenForm }: Props) {
         </td>
         <td>{item.firstName}</td>
         <td>{item.lastName}</td>
+        <td>{item.gender}</td>
         <td>{item.occupation}</td>
         <td>{calculateAge(item.dateOfBirth)}</td>
         <td>
@@ -73,7 +74,7 @@ function Row({ item, setPatient, setOpenForm }: Props) {
   );
 }
 
-function calculateAge(dateOfBirth: Date | undefined) {
+function calculateAge(dateOfBirth: Date | undefined | null) {
   if (!dateOfBirth) {
     return 'N/A';
   }
