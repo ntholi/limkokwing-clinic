@@ -1,4 +1,13 @@
-import { Box, Button, Paper, SimpleGrid, Text, Title } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Paper,
+  SimpleGrid,
+  Text,
+  Title,
+  Group,
+  Divider,
+} from '@mantine/core';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { FaStepBackward } from 'react-icons/fa';
@@ -31,12 +40,23 @@ function PatientProfile() {
           {patient?.firstName} {patient?.lastName}
         </Title>
         <Paper shadow='xl' radius='xs' p='xl' mt='xl' withBorder>
-          <SimpleGrid sx={{ width: '40%' }} cols={2}>
-            <Text>ID</Text> <Text>{patient?.id}</Text>
-            <Text>First Name</Text> <Text>{patient?.firstName}</Text>
-            <Text>Last Name</Text> <Text>{patient?.lastName}</Text>
-            <Text>Occupation</Text> <Text>{patient?.occupation}</Text>
-          </SimpleGrid>
+          <Group position='apart'>
+            <SimpleGrid sx={{ width: '40%' }} cols={2}>
+              <Text weight='bold'>ID</Text> <Text>{patient?.id}</Text>
+              <Text weight='bold'>First Name</Text>{' '}
+              <Text>{patient?.firstName}</Text>
+              <Text weight='bold'>Last Name</Text>{' '}
+              <Text>{patient?.lastName}</Text>
+            </SimpleGrid>
+
+            <SimpleGrid sx={{ width: '40%' }} cols={2}>
+              <Text weight='bold'>Gender</Text> <Text>{patient?.gender}</Text>
+              <Text weight='bold'>Date of Birth</Text>
+              <Text>{asString(patient?.dateOfBirth)}</Text>
+              <Text weight='bold'>Occupation</Text>{' '}
+              <Text>{patient?.occupation}</Text>
+            </SimpleGrid>
+          </Group>
         </Paper>
         <Title order={3} mt={50} mb='md' ml='sm' sx={{ fontWeight: 'normal' }}>
           Patient Records
@@ -45,6 +65,14 @@ function PatientProfile() {
       </Box>
     </Layout>
   );
+}
+
+function asString(timestamp: any) {
+  if (!timestamp) {
+    return '';
+  }
+  const date = timestamp.toDate();
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 }
 
 export default PatientProfile;

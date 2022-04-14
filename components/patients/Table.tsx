@@ -1,4 +1,4 @@
-import { Table } from '@mantine/core';
+import { Center, Pagination, Table } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import Patient from './patient';
 import { loadPatients } from './patient-service';
@@ -12,9 +12,16 @@ type Props = {
 
 function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [activePage, setPage] = useState(1);
+  const [lastId, setLastId] = useState<string | null>(null);
+
   useEffect(() => {
-    return loadPatients(searchKey, setPatients);
-  }, [searchKey]);
+    loadPatients(searchKey, lastId).then((item) => {
+      const { patients, lastId } = item;
+      setPatients(patients);
+      setLastId(lastId);
+    });
+  }, [activePage]);
 
   return (
     <>
@@ -41,6 +48,9 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
           ))}
         </tbody>
       </Table>
+      <Center mt='lg'>
+        <Pagination page={activePage} onChange={setPage} total={10} />
+      </Center>
     </>
   );
 }
