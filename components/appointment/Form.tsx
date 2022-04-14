@@ -8,10 +8,9 @@ import {
   Textarea,
   TextInput,
 } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
+import { FiSearch } from 'react-icons/fi';
 import { useForm } from '@mantine/form';
 import { serverTimestamp } from 'firebase/firestore';
-import { Search } from 'grommet-icons';
 import React, { useEffect, useState } from 'react';
 import { getPatient } from '../patients/patient-service';
 import Appointment from './appointment';
@@ -72,7 +71,7 @@ function Form({ appointment, setOpened }: Props) {
             {...form.getInputProps('patient')}
             rightSection={
               <ActionIcon onClick={lookupUpPatient}>
-                <Search />
+                <FiSearch />
               </ActionIcon>
             }
           />

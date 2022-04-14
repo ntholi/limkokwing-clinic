@@ -8,8 +8,7 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { useModals } from '@mantine/modals';
-import { FieldValue } from 'firebase/firestore';
-import { FormEdit, FormTrash } from 'grommet-icons';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
@@ -57,7 +56,7 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
         <td>
           <Group>
             <ActionIcon onClick={handleEdit}>
-              <FormEdit />
+              <MdEdit color='#90A4AE' />
             </ActionIcon>
             <ActionIcon
               onClick={() =>
@@ -66,7 +65,7 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
                 )
               }
             >
-              <FormTrash color='red' />
+              <MdDelete color='#E57373' />
             </ActionIcon>
           </Group>
         </td>

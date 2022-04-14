@@ -7,7 +7,7 @@ import Layout from '../../components/layout/Layout';
 import Form from '../../components/patients/Form';
 import Patient from '../../components/patients/patient';
 import PatientsTable from '../../components/patients/Table';
-import readCSV from './import-helper';
+import readCSV from '../../components/patients/import-helper';
 
 function Index() {
   const [opened, setOpened] = useState(false);
