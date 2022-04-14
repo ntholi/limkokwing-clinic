@@ -39,8 +39,6 @@ function LoginForm() {
     router.push('/');
   }
 
-  console.log('Has name', hasName);
-
   return (
     <Box sx={{ width: 350 }} mx='auto' mt={100}>
       <Title mb='xl'>Login</Title>

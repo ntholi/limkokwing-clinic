@@ -13,10 +13,10 @@ function Footer() {
       <Anchor
         ml={5}
         size='sm'
-        href='https://github.com/ntholi/clinic'
+        href='https://github.com/ntholi/limkokwing-clinic'
         target='_blank'
       >
-        @ntholi/clinic
+        @ntholi/limkokwing-clinic
       </Anchor>
     </MantineFooter>
   );
