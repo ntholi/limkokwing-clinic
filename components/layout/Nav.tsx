@@ -1,10 +1,11 @@
 import { Navbar, Text, Group, UnstyledButton } from '@mantine/core';
-import { Home, Icon, Logout } from 'grommet-icons';
-import { AiFillMedicineBox, AiOutlineMedicineBox } from 'react-icons/ai';
+import { AiOutlineMedicineBox } from 'react-icons/ai';
+import { ImExit } from 'react-icons/im';
 import { FaStethoscope } from 'react-icons/fa';
 import { BsPeople } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { logout } from '../login/login-service';
 
 type NavProps = {
   label: string;
@@ -12,19 +13,23 @@ type NavProps = {
   path: string;
 };
 
-function NavItem({ label, icon, path }: NavProps) {
-  const router = useRouter();
-  return (
-    <UnstyledButton onClick={() => router.push(path)}>
-      <Group>
-        {icon}
-        <Text size='sm'>{label}</Text>
-      </Group>
-    </UnstyledButton>
-  );
-}
-
 function Nav() {
+  const router = useRouter();
+  function NavItem({ label, icon, path }: NavProps) {
+    return (
+      <UnstyledButton onClick={() => router.push(path)}>
+        <Group>
+          {icon}
+          <Text size='sm'>{label}</Text>
+        </Group>
+      </UnstyledButton>
+    );
+  }
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/login');
+  };
   return (
     <Navbar p='md' width={{ sm: 200, lg: 300 }}>
       <Navbar.Section>
@@ -49,10 +54,12 @@ function Nav() {
         />
       </Navbar.Section>
       <Navbar.Section>
-        <Group>
-          <Logout />
-          <Text>Logout</Text>
-        </Group>
+        <UnstyledButton onClick={handleLogout}>
+          <Group>
+            <ImExit />
+            <Text>Logout</Text>
+          </Group>
+        </UnstyledButton>
       </Navbar.Section>
     </Navbar>
   );

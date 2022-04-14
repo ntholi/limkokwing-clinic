@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
+import UserContextProvider from '../components/session/UserSession';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -24,7 +25,9 @@ export default function App(props: AppProps) {
         }}
       >
         <ModalsProvider>
-          <Component {...pageProps} />
+          <UserContextProvider>
+            <Component {...pageProps} />
+          </UserContextProvider>
         </ModalsProvider>
       </MantineProvider>
     </>
