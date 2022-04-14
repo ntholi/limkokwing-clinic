@@ -20,11 +20,10 @@ export const loadPatients = (
   searchKey: string,
   setPatients: (patients: Patient[]) => void
 ) => {
+  const keyword = searchKey.trim().toUpperCase();
+  console.log(`search keyword: '${keyword}'`);
   const q = searchKey
-    ? query(
-        collection(firestore, 'patients'),
-        where('id', '==', searchKey.toUpperCase().trim())
-      )
+    ? query(collection(firestore, 'patients'), where('id', '==', keyword))
     : collection(firestore, 'patients');
   return onSnapshot(q, (snapshot) => {
     const patients: Patient[] = [];
@@ -43,11 +42,7 @@ export const loadPatients = (
 export const savePatient = async (patient: Patient) => {
   if (patient.id) {
     await setDoc(doc(firestore, 'patients', patient.id), {
-      firstName: patient.firstName,
-      lastName: patient.lastName,
-      gender: patient.gender,
-      dateOfBirth: patient.dateOfBirth,
-      occupation: patient.occupation,
+      ...patient,
     });
   }
 };

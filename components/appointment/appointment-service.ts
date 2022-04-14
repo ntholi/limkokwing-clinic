@@ -52,12 +52,8 @@ export async function getAppointments(patientId: string) {
 
 export const saveAppointment = async (appointment: Appointment) => {
   await addDoc(collection(firestore, 'appointments'), {
+    ...appointment,
     date: serverTimestamp(),
-    patient: appointment.patient,
-    diagnosis: appointment.diagnosis,
-    medication: appointment.medication,
-    notes: appointment.notes,
-    attendedBy: appointment.attendedBy,
   });
 };
 
