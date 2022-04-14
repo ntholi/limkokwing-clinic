@@ -54,7 +54,6 @@ function getLastName(displayName: string | null | undefined) {
   if (!displayName) {
     return '';
   }
-  const [, lastName] = displayName.split(' ');
-  return lastName;
+  return displayName.split(' ').slice(-1).join(' ');
 }
 export default Layout;
