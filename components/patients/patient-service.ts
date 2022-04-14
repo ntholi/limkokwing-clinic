@@ -5,8 +5,10 @@ import {
   doc,
   getDoc,
   onSnapshot,
+  query,
   runTransaction,
   setDoc,
+  where,
 } from 'firebase/firestore';
 import { firestore } from '../firebase/config';
 
@@ -14,8 +16,17 @@ export async function getPatient(id: string): Promise<Patient> {
   return (await getDoc(doc(firestore, 'patients', id))).data() as Patient;
 }
 
-export const loadPatients = (setPatients: (patients: Patient[]) => void) => {
-  return onSnapshot(collection(firestore, 'patients'), (snapshot) => {
+export const loadPatients = (
+  searchKey: string,
+  setPatients: (patients: Patient[]) => void
+) => {
+  const q = searchKey
+    ? query(
+        collection(firestore, 'patients'),
+        where('id', '==', searchKey.toUpperCase().trim())
+      )
+    : collection(firestore, 'patients');
+  return onSnapshot(q, (snapshot) => {
     const patients: Patient[] = [];
     snapshot.forEach((document) => {
       const patient = document.data();

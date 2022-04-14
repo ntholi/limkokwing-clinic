@@ -7,13 +7,14 @@ import Row from './Row';
 type Props = {
   setPatient: (patient: Patient | null) => void;
   setOpenForm: (opened: boolean) => void;
+  searchKey: string;
 };
 
-function PatientsTable({ setPatient, setOpenForm }: Props) {
+function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
   useEffect(() => {
-    return loadPatients(setPatients);
-  }, []);
+    return loadPatients(searchKey, setPatients);
+  }, [searchKey]);
 
   return (
     <>

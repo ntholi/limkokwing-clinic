@@ -9,10 +9,9 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { useModals } from '@mantine/modals';
-import { FormEdit, FormTrash } from 'grommet-icons';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Patient from './patient';
 import { deletePatient } from './patient-service';
@@ -56,7 +55,7 @@ function Row({ item, setPatient, setOpenForm }: Props) {
         <td>
           <Group>
             <ActionIcon onClick={handleEdit}>
-              <FormEdit />
+              <MdEdit color='#90A4AE' />
             </ActionIcon>
             <ActionIcon
               onClick={() =>
@@ -65,7 +64,7 @@ function Row({ item, setPatient, setOpenForm }: Props) {
                 )
               }
             >
-              <FormTrash color='red' />
+              <MdDelete color='#E57373' />
             </ActionIcon>
           </Group>
         </td>

@@ -1,6 +1,8 @@
-import { ActionIcon, Button, Group, Modal, Paper } from '@mantine/core';
+import { ActionIcon, Button, Group, Input, Modal, Paper } from '@mantine/core';
 import React, { useRef, useState } from 'react';
 import { FaFileImport } from 'react-icons/fa';
+import { FiSearch } from 'react-icons/fi';
+import { MdClear } from 'react-icons/md';
 import Layout from '../../components/layout/Layout';
 import Form from '../../components/patients/Form';
 import Patient from '../../components/patients/patient';
@@ -11,10 +13,17 @@ function Index() {
   const [opened, setOpened] = useState(false);
   const [patient, setPatient] = useState<Patient | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const [searchKey, setSearchKey] = useState('');
 
   function openForm() {
     setPatient(null);
     setOpened(true);
+  }
+
+  function handleSearch() {}
+
+  function clearSearch() {
+    setSearchKey('');
   }
 
   function handleImport() {
@@ -54,9 +63,29 @@ function Index() {
             <Button variant='default' onClick={openForm}>
               New
             </Button>
+            <Input
+              placeholder='Search by ID'
+              value={searchKey}
+              onChange={(e: any) => setSearchKey(e.target.value)}
+              rightSection={
+                searchKey ? (
+                  <ActionIcon onClick={clearSearch}>
+                    <MdClear />
+                  </ActionIcon>
+                ) : (
+                  <ActionIcon onClick={handleSearch}>
+                    <FiSearch />
+                  </ActionIcon>
+                )
+              }
+            />
           </Group>
         </Paper>
-        <PatientsTable setPatient={setPatient} setOpenForm={setOpened} />
+        <PatientsTable
+          setPatient={setPatient}
+          setOpenForm={setOpened}
+          searchKey={searchKey}
+        />
       </Layout>
     </>
   );

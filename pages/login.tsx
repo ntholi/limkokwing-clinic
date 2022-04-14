@@ -1,13 +1,4 @@
-import {
-  AppShell,
-  Header,
-  Image,
-  Anchor,
-  Text,
-  Group,
-  Center,
-} from '@mantine/core';
-import { Github } from 'grommet-icons';
+import { AppShell, Header, Image, Text, Group, Center } from '@mantine/core';
 import Footer from '../components/layout/Footer';
 import LoginForm from '../components/login/LoginForm';
 
