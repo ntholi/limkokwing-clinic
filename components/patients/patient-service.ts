@@ -36,7 +36,7 @@ export const loadPatients = async (
         collection(firestore, 'patients'),
         orderBy('id'),
         startAfter(lastId),
-        limit(5)
+        limit(13)
       );
 
   const patients: Patient[] = [];

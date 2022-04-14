@@ -1,5 +1,4 @@
 import { Footer as MantineFooter, Anchor } from '@mantine/core';
-import { Github } from 'grommet-icons';
 import { FaGithub } from 'react-icons/fa';
 
 function Footer() {

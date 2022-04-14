@@ -48,9 +48,6 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
           ))}
         </tbody>
       </Table>
-      <Center mt='lg'>
-        <Pagination page={activePage} onChange={setPage} total={10} />
-      </Center>
     </>
   );
 }

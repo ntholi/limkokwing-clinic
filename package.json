@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "export": "next export",
+    "lint": "next lint",
+    "deploy": "npm run build && npm run export && firebase deploy --only hosting:limkokwing-clinic"
   },
   "dependencies": {
     "@mantine/core": "^4.1.2",
