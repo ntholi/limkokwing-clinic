@@ -28,8 +28,6 @@ export const loadPatients = async (
 ) => {
   const keyword = searchKey.trim().toUpperCase();
 
-  console.log('previousDoc', lastId);
-
   const q = searchKey
     ? query(collection(firestore, 'patients'), where('id', '==', keyword))
     : query(
@@ -50,19 +48,28 @@ export const loadPatients = async (
     patients.push(item as Patient);
   });
 
+  const previousDoc =
+    patients.length > 0 ? patients[patients.length - 1].id : null;
+
   return {
-    patients,
-    lastId: patients.length > 0 ? patients[patients.length - 1].id : null,
+    items: patients,
+    lastId: previousDoc,
   };
 };
 
 export const savePatient = async (patient: Patient) => {
   if (patient.id) {
+    patient.id = formattedId(patient.id);
     await setDoc(doc(firestore, 'patients', patient.id), {
       ...patient,
     });
   }
 };
+
+// Remove blank space from string and convert to uppercase
+function formattedId(id: string) {
+  return id.replace(/\s/g, '').toUpperCase();
+}
 
 export const updatePatient = async (id: string, patient: Patient) => {
   await runTransaction(firestore, async (transaction) => {

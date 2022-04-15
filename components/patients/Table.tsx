@@ -1,4 +1,4 @@
-import { Center, Pagination, Table } from '@mantine/core';
+import { Button, Center, Pagination, Table } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import Patient from './patient';
 import { loadPatients } from './patient-service';
@@ -12,16 +12,32 @@ type Props = {
 
 function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [activePage, setPage] = useState(1);
   const [lastId, setLastId] = useState<string | null>(null);
 
-  useEffect(() => {
+  function populateTable() {
+    console.log('sent lastId: ', lastId);
     loadPatients(searchKey, lastId).then((item) => {
-      const { patients, lastId } = item;
-      setPatients(patients);
+      const { items, lastId } = item;
+      console.log('received lastId', lastId);
       setLastId(lastId);
+      setPatients([...patients, ...items]);
     });
-  }, [activePage]);
+  }
+
+  // const handleScroll = (e: any) => {
+  //   const scrollHeight = e.target.documentElement.scrollHeight;
+  //   const currentHeight = Math.ceil(
+  //     e.target.documentElement.scrollTop + window.innerHeight
+  //   );
+  //   if (currentHeight + 1 >= scrollHeight) {
+  //     populateTable();
+  //   }
+  // };
+
+  useEffect(() => {
+    populateTable();
+    // window.addEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -48,6 +64,9 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
           ))}
         </tbody>
       </Table>
+      <Center>
+        <Button onClick={populateTable}>Load More</Button>
+      </Center>
     </>
   );
 }
