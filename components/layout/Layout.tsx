@@ -1,4 +1,12 @@
-import { AppShell, Header, Image, Text, Group } from '@mantine/core';
+import {
+  AppShell,
+  Header,
+  Image,
+  Text,
+  Group,
+  LoadingOverlay,
+  Loader,
+} from '@mantine/core';
 import { useRouter } from 'next/router';
 import { FaUserAlt } from 'react-icons/fa';
 import { useSession } from '../session/UserSession';
@@ -45,7 +53,13 @@ function Layout({ children }: Props) {
       navbar={<Nav />}
       footer={<Footer />}
     >
-      {loadingAuthUser ? <Text>Loading...</Text> : children}
+      {loadingAuthUser ? (
+        <Group position='center' style={{ width: '100%', height: '100%' }}>
+          <Loader size='xl' />
+        </Group>
+      ) : (
+        children
+      )}
     </AppShell>
   );
 }
