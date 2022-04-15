@@ -12,7 +12,7 @@ type Props = {
 
 function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [lastId, setLastId] = useState<string | null>(null);
+  const [lastId, setLastId] = useState<string | null>('');
 
   function populateTable() {
     console.log('sent lastId: ', lastId);
@@ -64,8 +64,10 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
           ))}
         </tbody>
       </Table>
-      <Center>
-        <Button onClick={populateTable}>Load More</Button>
+      <Center my='md'>
+        <Button onClick={populateTable} disabled={lastId == null}>
+          Load More
+        </Button>
       </Center>
     </>
   );

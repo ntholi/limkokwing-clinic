@@ -41,7 +41,7 @@ export const loadPatients = async (
   const snapshot = await getDocs(q);
   snapshot.forEach((doc) => {
     const item = doc.data();
-    item.id = doc.id;
+    // item.id = doc.id;
     if (item.dateOfBirth && item.dateOfBirth.toDate) {
       item.dateOfBirth = item.dateOfBirth.toDate();
     }
