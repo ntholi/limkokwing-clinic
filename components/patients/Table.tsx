@@ -15,28 +15,16 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
   const [lastId, setLastId] = useState<string | null>('');
 
   function populateTable() {
-    console.log('sent lastId: ', lastId);
     loadPatients(searchKey, lastId).then((item) => {
       const { items, lastId } = item;
-      console.log('received lastId', lastId);
       setLastId(lastId);
+      // setPatients((prev) => [...prev, ...items]);
       setPatients([...patients, ...items]);
     });
   }
 
-  // const handleScroll = (e: any) => {
-  //   const scrollHeight = e.target.documentElement.scrollHeight;
-  //   const currentHeight = Math.ceil(
-  //     e.target.documentElement.scrollTop + window.innerHeight
-  //   );
-  //   if (currentHeight + 1 >= scrollHeight) {
-  //     populateTable();
-  //   }
-  // };
-
   useEffect(() => {
     populateTable();
-    // window.addEventListener('scroll', handleScroll);
   }, []);
 
   return (
