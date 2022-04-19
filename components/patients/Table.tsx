@@ -18,14 +18,17 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
     loadPatients(searchKey, lastId).then((item) => {
       const { items, lastId } = item;
       setLastId(lastId);
-      // setPatients((prev) => [...prev, ...items]);
-      setPatients([...patients, ...items]);
+      if (searchKey) {
+        setPatients(items);
+      } else {
+        setPatients([...patients, ...items]);
+      }
     });
   }
 
   useEffect(() => {
     populateTable();
-  }, []);
+  }, [searchKey]);
 
   return (
     <>
