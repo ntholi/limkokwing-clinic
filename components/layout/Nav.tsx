@@ -1,5 +1,5 @@
 import { Navbar, Text, Group, UnstyledButton } from '@mantine/core';
-import { AiOutlineMedicineBox } from 'react-icons/ai';
+import { AiFillShop, AiOutlineMedicineBox } from 'react-icons/ai';
 import { ImExit } from 'react-icons/im';
 import { FaStethoscope } from 'react-icons/fa';
 import { BsPeople } from 'react-icons/bs';
@@ -41,9 +41,16 @@ function Nav() {
       </Navbar.Section>
       <Navbar.Section mt={10}>
         <NavItem
-          label='Medication'
+          label='Inventory'
+          icon={<AiFillShop size={24} />}
+          path={'/drugs'}
+        />
+      </Navbar.Section>
+      <Navbar.Section mt={10}>
+        <NavItem
+          label='Drugs'
           icon={<AiOutlineMedicineBox size={24} />}
-          path={'/medication'}
+          path={'/drugs'}
         />
       </Navbar.Section>
       <Navbar.Section mt={10} grow>

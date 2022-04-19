@@ -97,7 +97,7 @@ function Form({ appointment, setOpened }: Props) {
       </Stack>
 
       <Group position='right' mt='md'>
-        <Button type='submit'>Submit</Button>
+        <Button type='submit'>Save</Button>
       </Group>
     </form>
   );

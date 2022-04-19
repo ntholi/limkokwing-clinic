@@ -61,14 +61,7 @@ export const updateAppointment = async (
   id: string,
   appointment: Appointment
 ) => {
-  updateDoc(doc(firestore, 'appointments', id), {
-    date: appointment.date,
-    patient: appointment.patient,
-    diagnosis: appointment.diagnosis,
-    medication: appointment.medication,
-    notes: appointment.notes,
-    attendedBy: appointment.attendedBy,
-  });
+  await updateDoc(doc(firestore, 'appointments', id), { ...appointment });
 };
 
 export const deleteAppointment = async (appointmentId: string | null) => {
