@@ -76,6 +76,9 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
 
 //Converts firebase's serverTimestamp to a string
 function asString(date: any) {
+  if (!date) {
+    return '';
+  }
   return date.toDate().toLocaleDateString();
 }
 
