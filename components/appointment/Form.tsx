@@ -2,8 +2,7 @@ import {
   ActionIcon,
   Button,
   Group,
-  Modal,
-  Select,
+  MultiSelect,
   Stack,
   Textarea,
   TextInput,
@@ -15,24 +14,39 @@ import React, { useEffect, useState } from 'react';
 import { getPatient } from '../patients/patient-service';
 import Appointment from './appointment';
 import { saveAppointment, updateAppointment } from './appointment-service';
+import { getDrugs } from '../drugs/drug-service';
+import { useSession } from '../session/UserSession';
+import { DatePicker, TimeInput } from '@mantine/dates';
 
 type Props = {
   appointment?: Appointment | null;
   setOpened: (opened: boolean) => void;
 };
 function Form({ appointment, setOpened }: Props) {
+  const { user } = useSession();
   const [patientNames, setPatientNames] = useState<string>('');
+  const [medications, setMedications] = useState<string[]>([]);
+  const [appointmentTime, setAppointmentTime] = useState<Date | undefined>();
   const form = useForm<Appointment>({
     initialValues: {
       id: '',
       date: serverTimestamp(),
       patient: '',
       diagnosis: '',
-      medication: '',
+      medication: [],
       notes: '',
-      attendedBy: '',
+      attendedBy: user?.displayName,
+      createdBy: user?.uid,
     },
   });
+
+  useEffect(() => {
+    getDrugs().then((drugs) => {
+      const data: string[] = [];
+      drugs.forEach((drug) => data.push(`${drug.name} (${drug.size})`));
+      setMedications(data);
+    });
+  }, []);
 
   useEffect(() => {
     if (appointment) {
@@ -42,16 +56,18 @@ function Form({ appointment, setOpened }: Props) {
 
   function lookupUpPatient() {
     getPatient(form.values['patient']).then((patient) => {
-      setPatientNames(`${patient.firstName} ${patient.lastName}`);
+      if (patient) {
+        setPatientNames(`${patient.firstName} ${patient.lastName}`);
+      }
     });
   }
 
   async function handleSubmit(value: Appointment) {
     try {
       if (appointment) {
-        await updateAppointment(appointment.id, value);
+        await updateAppointment(appointment.id, value, appointmentTime);
       } else {
-        await saveAppointment(value);
+        await saveAppointment(value, appointmentTime);
       }
       form.reset();
       setOpened(false);
@@ -83,14 +99,24 @@ function Form({ appointment, setOpened }: Props) {
             disabled
           />
         </Group>
-        {/* <DatePicker
-          label='Date'
-          placeholder='Leave Blank'
-          {...form.getInputProps('date')}
-        /> */}
-        <Group>
-          <TextInput label='Diagnosis' {...form.getInputProps('diagnosis')} />
-          <TextInput label='Medication' {...form.getInputProps('medication')} />
+        <TextInput label='Diagnosis' {...form.getInputProps('diagnosis')} />
+        <MultiSelect
+          data={medications}
+          searchable
+          label='Medication'
+          disabled={medications.length === 0}
+          {...form.getInputProps('medication')}
+        />
+        <Group grow>
+          <DatePicker
+            label='Next Appointment'
+            {...form.getInputProps('nextAppointment')}
+          />
+          <TimeInput
+            label='What time?'
+            value={appointmentTime}
+            onChange={(date) => setAppointmentTime(date)}
+          />
         </Group>
         <TextInput label='Attended By' {...form.getInputProps('attendedBy')} />
         <Textarea label='Notes' {...form.getInputProps('notes')} />

@@ -51,7 +51,7 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
         <td>{asString(item.date)}</td>
         <td>{item.diagnosis}</td>
         <td>{item.attendedBy}</td>
-        <td>{item.medication}</td>
+        <td>{formatDrug(item.medication)}</td>
         <td>{item.notes}</td>
         <td>
           <Group>
@@ -75,11 +75,18 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
 }
 
 //Converts firebase's serverTimestamp to a string
-function asString(date: any) {
+export function asString(date: any) {
   if (!date) {
     return '';
   }
   return date.toDate().toLocaleDateString();
+}
+
+export function formatDrug(drugs: string[]) {
+  if (!drugs) {
+    return '';
+  }
+  return drugs.map((drug) => drug.split('(')[0].trim()).join(', ');
 }
 
 export default Row;

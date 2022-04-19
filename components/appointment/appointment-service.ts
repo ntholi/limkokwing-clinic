@@ -50,7 +50,13 @@ export async function getAppointments(patientId: string) {
   return appointments;
 }
 
-export const saveAppointment = async (appointment: Appointment) => {
+export const saveAppointment = async (
+  appointment: Appointment,
+  time?: Date
+) => {
+  if (appointment.nextAppointment && time) {
+    appointment.nextAppointment.setHours(time.getHours(), time.getMinutes());
+  }
   await addDoc(collection(firestore, 'appointments'), {
     ...appointment,
     date: serverTimestamp(),
@@ -59,8 +65,12 @@ export const saveAppointment = async (appointment: Appointment) => {
 
 export const updateAppointment = async (
   id: string,
-  appointment: Appointment
+  appointment: Appointment,
+  time?: Date
 ) => {
+  if (appointment.nextAppointment && time) {
+    appointment.nextAppointment.setHours(time.getHours(), time.getMinutes());
+  }
   await updateDoc(doc(firestore, 'appointments', id), { ...appointment });
 };
 

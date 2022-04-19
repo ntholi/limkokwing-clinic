@@ -21,8 +21,9 @@ function PatientRecordsTable({ patientId }: Props) {
           <tr>
             <th>Date</th>
             <th>Diagnosis</th>
-            <th>Attended By</th>
             <th>Medication</th>
+            <th>Next Ap.</th>
+            <th>Attended By</th>
             <th>Notes</th>
             <th></th>
           </tr>

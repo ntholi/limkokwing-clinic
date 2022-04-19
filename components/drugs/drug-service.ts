@@ -28,13 +28,8 @@ export const loadDrugs = (setDrugs: (drugs: Drug[]) => void) => {
   });
 };
 
-export async function getDrugs(patientId: string) {
-  const q = query(
-    collection(firestore, 'drugs'),
-    where('patient', '==', patientId)
-  );
-
-  const querySnapshot = await getDocs(q);
+export async function getDrugs() {
+  const querySnapshot = await getDocs(query(collection(firestore, 'drugs')));
   const drugs: Drug[] = [];
   querySnapshot.forEach((doc) => {
     const drug = doc.data();

@@ -1,7 +1,9 @@
-import { ActionIcon, Button, Group, Modal, Paper, Text } from '@mantine/core';
-import { useModals } from '@mantine/modals';
-import React, { useState } from 'react';
+import React from 'react';
 import Appointment from '../../appointment/appointment';
+import {
+  asString as formatFirebaseDate,
+  formatDrug,
+} from '../../appointment/Row';
 
 type Props = {
   item: Appointment;
@@ -13,19 +15,23 @@ function Row({ item }: Props) {
   return (
     <>
       <tr>
-        <td>{asString(item.date)}</td>
+        <td>{formatFirebaseDate(item.date)}</td>
         <td>{item.diagnosis}</td>
         <td>{item.attendedBy}</td>
-        <td>{item.medication}</td>
+        <td>{formatDrug(item.medication)}</td>
+        <td>{dateAsString(item.nextAppointment)}</td>
         <td>{item.notes}</td>
       </tr>
     </>
   );
 }
 
-//Converts firebase's serverTimestamp to a string
-function asString(date: any) {
-  return date.toDate().toLocaleDateString();
+// Displays JavaScript Date object as string with time
+function dateAsString(date: Date | undefined) {
+  if (!date) {
+    return '';
+  }
+  // return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  return date.toLocaleString();
 }
-
 export default Row;

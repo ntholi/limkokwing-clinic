@@ -5,7 +5,9 @@ export default interface Appointment {
   date: FieldValue;
   patient: string;
   diagnosis: string;
-  medication: string;
+  medication: string[];
+  nextAppointment?: Date;
   notes: string;
-  attendedBy: string;
+  attendedBy?: string | null;
+  createdBy?: string;
 }
