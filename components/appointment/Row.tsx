@@ -2,7 +2,7 @@ import { ActionIcon, Group, Text, UnstyledButton } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Appointment from './appointment';
 import { deleteAppointment } from './appointment-service';

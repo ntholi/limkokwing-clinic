@@ -22,11 +22,12 @@ type Props = {
   appointment?: Appointment | null;
   setOpened: (opened: boolean) => void;
 };
+
 function Form({ appointment, setOpened }: Props) {
   const { user } = useSession();
   const [patientNames, setPatientNames] = useState<string>('');
   const [medications, setMedications] = useState<string[]>([]);
-  const [appointmentTime, setAppointmentTime] = useState<Date | undefined>();
+  const [nextAppointment, setAppointmentTime] = useState<Date | undefined>();
   const form = useForm<Appointment>({
     initialValues: {
       id: '',
@@ -51,6 +52,8 @@ function Form({ appointment, setOpened }: Props) {
   useEffect(() => {
     if (appointment) {
       form.setValues(appointment);
+      const date = appointment.nextAppointment?.toDate();
+      setAppointmentTime(date);
     }
   }, [appointment]);
 
@@ -65,9 +68,9 @@ function Form({ appointment, setOpened }: Props) {
   async function handleSubmit(value: Appointment) {
     try {
       if (appointment) {
-        await updateAppointment(appointment.id, value, appointmentTime);
+        await updateAppointment(appointment.id, value, nextAppointment);
       } else {
-        await saveAppointment(value, appointmentTime);
+        await saveAppointment(value, nextAppointment);
       }
       form.reset();
       setOpened(false);
@@ -107,14 +110,15 @@ function Form({ appointment, setOpened }: Props) {
           disabled={medications.length === 0}
           {...form.getInputProps('medication')}
         />
-        <Group position="apart" grow>
+        <Group position='apart' grow>
           <DatePicker
             label='Next Appointment'
             {...form.getInputProps('nextAppointment')}
+            value={nextAppointment}
           />
           <TimeInput
             label='What time?'
-            value={appointmentTime}
+            value={nextAppointment}
             onChange={(date) => setAppointmentTime(date)}
           />
         </Group>
