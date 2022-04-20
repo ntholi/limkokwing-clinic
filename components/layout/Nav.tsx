@@ -43,7 +43,7 @@ function Nav() {
         <NavItem
           label='Inventory'
           icon={<AiFillShop size={24} />}
-          path={'/drugs'}
+          path={'/inventory'}
         />
       </Navbar.Section>
       <Navbar.Section mt={10}>
