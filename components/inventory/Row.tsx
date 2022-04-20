@@ -32,29 +32,24 @@ function Row({ item, setInventory, setOpenForm }: Props) {
     }
   }
 
-  function handleDelete() {
-    if (item.drugId) {
-      deleteInventory(item.drugId);
-    }
+  function gotoRecords() {
+    router.push(`/inventory/records/${item.drugId}`);
   }
 
   return (
     <>
       <tr>
-        <td>{item.drugName}</td>
+        <td>
+          <UnstyledButton onClick={gotoRecords}>
+            <Text variant='link'>{item.drugName}</Text>
+          </UnstyledButton>
+        </td>
         <td>{item.quantity}</td>
         <td>
           <Group>
             <ActionIcon onClick={handleEdit}>
               <MdEdit color='#90A4AE' />
             </ActionIcon>
-            <ActionIcon
-              onClick={() =>
-                modals.openConfirmModal(
-                  getConfirmDeleteProps(item.drugName, handleDelete)
-                )
-              }
-            ></ActionIcon>
           </Group>
         </td>
       </tr>

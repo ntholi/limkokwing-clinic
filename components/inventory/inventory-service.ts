@@ -1,15 +1,22 @@
-import Inventory from './inventory';
+import Inventory, { InventoryRecord } from './inventory';
 import {
   addDoc,
   collection,
   deleteDoc,
   doc,
+  getDoc,
+  getDocs,
   onSnapshot,
+  query,
   runTransaction,
   serverTimestamp,
   updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../firebase/config';
+
+export async function getInventory(id: string) {
+  return (await getDoc(doc(firestore, 'inventory', id))).data() as Inventory;
+}
 
 export const loadInventories = (
   setInventories: (inventories: Inventory[]) => void
@@ -18,7 +25,7 @@ export const loadInventories = (
     const inventories: Inventory[] = [];
     snapshot.forEach((document) => {
       const inventory = document.data();
-      inventory.id = document.id;
+      inventory.drugId = document.id;
       if (inventory.dateOfBirth && inventory.dateOfBirth.toDate) {
         inventory.dateOfBirth = inventory.dateOfBirth.toDate();
       }
@@ -27,6 +34,19 @@ export const loadInventories = (
     setInventories(inventories);
   });
 };
+
+export async function getRecords(drugId: string) {
+  const querySnapshot = await getDocs(
+    query(collection(firestore, 'inventory', drugId, 'records'))
+  );
+  const records: InventoryRecord[] = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    data.id = doc.id;
+    records.push(data as InventoryRecord);
+  });
+  return records;
+}
 
 export const saveInventory = async (
   drugId: string | undefined,

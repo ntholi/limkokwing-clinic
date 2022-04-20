@@ -3,3 +3,9 @@ export default interface Inventory {
   drugName: string;
   quantity: number;
 }
+
+export interface InventoryRecord {
+  id: string;
+  quantity: number;
+  date: any;
+}

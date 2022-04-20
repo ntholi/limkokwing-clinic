@@ -58,7 +58,7 @@ function PatientProfile() {
             </SimpleGrid>
           </Group>
         </Paper>
-        <Title order={3} mt={50} mb='md' ml='sm' sx={{ fontWeight: 'normal' }}>
+        <Title order={3} mt='xl' mb='md' ml='sm' sx={{ fontWeight: 'normal' }}>
           Patient Records
         </Title>
         <PatientRecordsTable patientId={id as string} />
