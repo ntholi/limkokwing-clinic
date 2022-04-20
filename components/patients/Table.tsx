@@ -39,6 +39,7 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Gender</th>
+            <th>Phone Number</th>
             <th>Occupation</th>
             <th>Age</th>
             <th></th>

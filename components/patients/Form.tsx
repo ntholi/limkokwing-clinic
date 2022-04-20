@@ -23,6 +23,7 @@ function Form({ patient, setOpened }: Props) {
       id: '',
       firstName: '',
       lastName: '',
+      phoneNumber: '',
       occupation: 'Student',
     },
   });
@@ -56,22 +57,29 @@ function Form({ patient, setOpened }: Props) {
           placeholder='Emp/Std Number'
           {...form.getInputProps('id')}
         />
-        <TextInput
-          required
-          label='First Name'
-          placeholder='Names'
-          {...form.getInputProps('firstName')}
-        />
-        <TextInput
-          required
-          label='Last Name'
-          placeholder='Surname'
-          {...form.getInputProps('lastName')}
-        />
+        <Group>
+          <TextInput
+            required
+            label='First Name'
+            placeholder='Names'
+            {...form.getInputProps('firstName')}
+          />
+          <TextInput
+            required
+            label='Last Name'
+            placeholder='Surname'
+            {...form.getInputProps('lastName')}
+          />
+        </Group>
         <DatePicker
           label='Date of Birth'
           placeholder='Pick a date'
           {...form.getInputProps('dateOfBirth')}
+        />
+        <TextInput
+          required
+          label='Phone Number'
+          {...form.getInputProps('phoneNumber')}
         />
         <Select
           required

@@ -50,6 +50,7 @@ function Row({ item, setPatient, setOpenForm }: Props) {
         <td>{item.firstName}</td>
         <td>{item.lastName}</td>
         <td>{item.gender}</td>
+        <td>{item.phoneNumber}</td>
         <td>{item.occupation}</td>
         <td>{calculateAge(item.dateOfBirth)}</td>
         <td>
