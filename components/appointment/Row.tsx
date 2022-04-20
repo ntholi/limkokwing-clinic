@@ -1,12 +1,4 @@
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Modal,
-  Paper,
-  Text,
-  UnstyledButton,
-} from '@mantine/core';
+import { ActionIcon, Group, Text, UnstyledButton } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useRouter } from 'next/router';
@@ -14,6 +6,7 @@ import React, { useState } from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Appointment from './appointment';
 import { deleteAppointment } from './appointment-service';
+import { toDate } from '../utils/date-format';
 
 type Props = {
   item: Appointment;
@@ -48,7 +41,7 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
             <Text variant='link'>{item.patient}</Text>
           </UnstyledButton>
         </td>
-        <td>{asString(item.date)}</td>
+        <td>{toDate(item.date)}</td>
         <td>{item.diagnosis}</td>
         <td>{item.attendedBy}</td>
         <td>{formatDrug(item.medication)}</td>
@@ -72,14 +65,6 @@ function Row({ item, setAppointment, setOpenForm }: Props) {
       </tr>
     </>
   );
-}
-
-//Converts firebase's serverTimestamp to a string
-export function asString(date: any) {
-  if (!date) {
-    return '';
-  }
-  return date.toDate().toLocaleDateString();
 }
 
 export function formatDrug(drugs: string[]) {

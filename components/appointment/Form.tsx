@@ -107,7 +107,7 @@ function Form({ appointment, setOpened }: Props) {
           disabled={medications.length === 0}
           {...form.getInputProps('medication')}
         />
-        <Group grow>
+        <Group position="apart" grow>
           <DatePicker
             label='Next Appointment'
             {...form.getInputProps('nextAppointment')}

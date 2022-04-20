@@ -1,9 +1,7 @@
 import React from 'react';
 import Appointment from '../../appointment/appointment';
-import {
-  asString as formatFirebaseDate,
-  formatDrug,
-} from '../../appointment/Row';
+import { formatDrug } from '../../appointment/Row';
+import { toDate, toDateTime } from '../../utils/date-format';
 
 type Props = {
   item: Appointment;
@@ -15,23 +13,15 @@ function Row({ item }: Props) {
   return (
     <>
       <tr>
-        <td>{formatFirebaseDate(item.date)}</td>
+        <td>{toDate(item.date)}</td>
         <td>{item.diagnosis}</td>
-        <td>{item.attendedBy}</td>
         <td>{formatDrug(item.medication)}</td>
-        <td>{dateAsString(item.nextAppointment)}</td>
+        <td>{toDateTime(item.nextAppointment)}</td>
+        <td>{item.attendedBy}</td>
         <td>{item.notes}</td>
       </tr>
     </>
   );
 }
 
-// Displays JavaScript Date object as string with time
-function dateAsString(date: Date | undefined) {
-  if (!date) {
-    return '';
-  }
-  // return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-  return date.toLocaleString();
-}
 export default Row;
