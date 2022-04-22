@@ -38,6 +38,7 @@ function Form({ patient, setOpened }: Props) {
   }, [patient]);
 
   async function handleSubmit(value: Patient) {
+    setLoading(true);
     try {
       if (patient) {
         await updatePatient(patient.id, value);

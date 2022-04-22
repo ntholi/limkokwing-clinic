@@ -46,6 +46,7 @@ function Form({ inventory, setOpened }: Props) {
   }, [inventory]);
 
   async function handleSubmit(value: Inventory) {
+    setLoading(true);
     try {
       if (inventory) {
         await updateInventory(inventory.drugId, value);
