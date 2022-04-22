@@ -13,6 +13,8 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../firebase/config';
+import { getDrugs } from '../drugs/drug-service';
+import { drugFromString } from '../drugs/drug';
 
 export async function getInventory(id: string) {
   return (await getDoc(doc(firestore, 'inventory', id))).data() as Inventory;
@@ -70,6 +72,27 @@ export const saveInventory = async (
     quantity: inventory.quantity,
     date: serverTimestamp(),
   });
+};
+
+export const deductDrugs = async (drugs: string[]) => {
+  const all = await getDrugs();
+  const selectedDrugs = drugs.map((drug) => drugFromString(drug));
+  const drugIds = all
+    .filter((drug) => selectedDrugs.some((d) => d.name === drug.name))
+    .map((drug) => drug.id);
+
+  for (const drug of drugIds) {
+    if (!drug) continue;
+    await runTransaction(firestore, async (transaction) => {
+      const drugDoc = await transaction.get(doc(firestore, 'inventory', drug));
+      if (drugDoc.exists()) {
+        const quantity = drugDoc.data().quantity - 1;
+        await transaction.set(doc(firestore, 'inventory', drug), {
+          quantity,
+        });
+      }
+    });
+  }
 };
 
 export const updateInventory = async (

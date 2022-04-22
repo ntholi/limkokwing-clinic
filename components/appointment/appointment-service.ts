@@ -13,6 +13,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { firestore } from '../firebase/config';
+import { deductDrugs } from '../inventory/inventory-service';
 
 export const loadAppointments = (
   setAppointments: (appointments: Appointment[]) => void
@@ -61,6 +62,7 @@ export const saveAppointment = async (
     ...appointment,
     date: serverTimestamp(),
   });
+  await deductDrugs(appointment.medication);
 };
 
 export const updateAppointment = async (
