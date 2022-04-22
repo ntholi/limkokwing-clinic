@@ -17,7 +17,9 @@ import { getDrugs } from '../drugs/drug-service';
 import { drugFromString } from '../drugs/drug';
 
 export async function getInventory(id: string) {
-  return (await getDoc(doc(firestore, 'inventory', id))).data() as Inventory;
+  if (id) {
+    return (await getDoc(doc(firestore, 'inventory', id))).data() as Inventory;
+  }
 }
 
 export const loadInventories = (
@@ -99,7 +101,6 @@ export const updateInventory = async (
   id: string | undefined,
   inventory: Inventory
 ) => {
-  console.log('Updating, ', id, inventory);
   if (id) {
     await updateDoc(doc(firestore, 'inventory', id), {
       ...inventory,

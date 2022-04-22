@@ -4,61 +4,74 @@ import { ImExit } from 'react-icons/im';
 import { FaStethoscope } from 'react-icons/fa';
 import { BsPeople } from 'react-icons/bs';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { logout } from '../login/login-service';
 
-type NavProps = {
-  label: string;
-  icon: any;
-  path: string;
-};
+const paths = ['appointments', 'inventory', 'drugs', 'patients'];
 
 function Nav() {
   const router = useRouter();
-  function NavItem({ label, icon, path }: NavProps) {
-    return (
-      <UnstyledButton onClick={() => router.push(path)}>
-        <Group>
-          {icon}
-          <Text size='sm'>{label}</Text>
-        </Group>
-      </UnstyledButton>
-    );
-  }
-
   const handleLogout = async () => {
     await logout();
     router.push('/login');
   };
+  const [index, setIndex] = React.useState(0);
+  const [active, inactive] = ['#FAFAFA', '#757575'];
+
+  function handleClick(index: number) {
+    router.push(`/${paths[index]}`);
+  }
+
+  useEffect(() => {
+    const path = router.pathname.split('/')[1];
+    const index = paths.indexOf(path);
+    setIndex(index);
+  }, [router.pathname]);
+
   return (
     <Navbar p='md' width={{ sm: 200, lg: 300 }}>
       <Navbar.Section>
-        <NavItem
-          label='Appointments'
-          icon={<FaStethoscope size={24} />}
-          path={'/appointments'}
-        />
+        <UnstyledButton onClick={() => handleClick(0)}>
+          <Group>
+            <FaStethoscope size={24} color={index == 0 ? active : inactive} />
+            <Text size='sm' color={index == 0 ? active : inactive}>
+              Appointments
+            </Text>
+          </Group>
+        </UnstyledButton>
       </Navbar.Section>
       <Navbar.Section mt={10}>
-        <NavItem
-          label='Inventory'
-          icon={<AiFillShop size={24} />}
-          path={'/inventory'}
-        />
+        <UnstyledButton onClick={() => handleClick(1)}>
+          <Group>
+            <AiFillShop size={24} color={index == 1 ? active : inactive} />
+            <Text size='sm' color={index == 1 ? active : inactive}>
+              Inventory
+            </Text>
+          </Group>
+        </UnstyledButton>
       </Navbar.Section>
       <Navbar.Section mt={10}>
-        <NavItem
-          label='Drugs'
-          icon={<AiOutlineMedicineBox size={24} />}
-          path={'/drugs'}
-        />
+        <UnstyledButton onClick={() => handleClick(2)}>
+          <Group>
+            <AiOutlineMedicineBox
+              size={24}
+              color={index == 2 ? active : inactive}
+            />
+            <Text size='sm' color={index == 2 ? active : inactive}>
+              Drugs
+            </Text>
+          </Group>
+        </UnstyledButton>
       </Navbar.Section>
       <Navbar.Section mt={10} grow>
-        <NavItem
-          label='Patients'
-          icon={<BsPeople size={24} />}
-          path={'/patients'}
-        />
+        <UnstyledButton onClick={() => handleClick(3)}>
+          <Group>
+            <BsPeople size={24} color={index == 3 ? active : inactive} />
+            <Text size='sm' color={index == 3 ? active : inactive}>
+              Patients
+            </Text>
+          </Group>
+        </UnstyledButton>
       </Navbar.Section>
       <Navbar.Section>
         <UnstyledButton onClick={handleLogout}>
