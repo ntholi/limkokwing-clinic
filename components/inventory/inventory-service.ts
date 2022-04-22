@@ -99,6 +99,7 @@ export const updateInventory = async (
   id: string | undefined,
   inventory: Inventory
 ) => {
+  console.log('Updating, ', id, inventory);
   if (id) {
     await updateDoc(doc(firestore, 'inventory', id), {
       ...inventory,
