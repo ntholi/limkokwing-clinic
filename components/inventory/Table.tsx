@@ -1,5 +1,6 @@
-import { Table } from '@mantine/core';
+import { Group, Loader, Table } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
+import TableCaption from '../utils/TableCaption';
 import Inventory from './inventory';
 import { loadInventories } from './inventory-service';
 import Row from './Row';
@@ -11,8 +12,13 @@ type Props = {
 
 function InventoriesTable({ setInventory, setOpenForm }: Props) {
   const [inventories, setInventories] = useState<Inventory[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    return loadInventories(setInventories);
+    return loadInventories((item) => {
+      setInventories(item);
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -26,6 +32,7 @@ function InventoriesTable({ setInventory, setOpenForm }: Props) {
           </tr>
         </thead>
         <tbody>
+          <TableCaption loading={loading} />
           {inventories.map((item) => (
             <Row
               key={item.drugId}

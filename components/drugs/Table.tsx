@@ -1,5 +1,6 @@
-import { Table } from '@mantine/core';
+import { Group, Loader, Table } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
+import TableCaption from '../utils/TableCaption';
 import Drug from './drug';
 import { loadDrugs } from './drug-service';
 import Row from './Row';
@@ -11,8 +12,12 @@ type Props = {
 
 function DrugsTable({ setDrug, setOpenForm }: Props) {
   const [drugs, setDrugs] = useState<Drug[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    return loadDrugs(setDrugs);
+    return loadDrugs((item) => {
+      setDrugs(item);
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -27,6 +32,7 @@ function DrugsTable({ setDrug, setOpenForm }: Props) {
           </tr>
         </thead>
         <tbody>
+          <TableCaption loading={loading} />
           {drugs.map((item) => (
             <Row
               key={item.id}

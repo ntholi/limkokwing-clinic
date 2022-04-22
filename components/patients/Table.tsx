@@ -1,5 +1,6 @@
-import { Button, Center, Pagination, Table } from '@mantine/core';
+import { Button, Center, Table } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
+import TableCaption from '../utils/TableCaption';
 import Patient from './patient';
 import { loadPatients } from './patient-service';
 import Row from './Row';
@@ -13,6 +14,7 @@ type Props = {
 function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [lastId, setLastId] = useState<string | null>('');
+  const [loading, setLoading] = useState(true);
 
   function populateTable() {
     loadPatients(searchKey, lastId).then((item) => {
@@ -23,6 +25,7 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
       } else {
         setPatients([...patients, ...items]);
       }
+      setLoading(false);
     });
   }
 
@@ -46,6 +49,7 @@ function PatientsTable({ setPatient, setOpenForm, searchKey }: Props) {
           </tr>
         </thead>
         <tbody>
+          <TableCaption loading={loading} />
           {patients.map((item) => (
             <Row
               key={item.id}

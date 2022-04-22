@@ -1,5 +1,6 @@
-import { Table } from '@mantine/core';
+import { Group, Loader, Table } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
+import TableCaption from '../utils/TableCaption';
 import Appointment from './appointment';
 import { loadAppointments } from './appointment-service';
 import Row from './Row';
@@ -11,8 +12,13 @@ type Props = {
 
 function AppointmentsTable({ setAppointment, setOpenForm }: Props) {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    return loadAppointments(setAppointments);
+    return loadAppointments((items) => {
+      setAppointments(items);
+      setLoading(false);
+    });
   }, []);
 
   return (
@@ -30,6 +36,7 @@ function AppointmentsTable({ setAppointment, setOpenForm }: Props) {
           </tr>
         </thead>
         <tbody>
+          <TableCaption loading={loading} />
           {appointments.map((item) => (
             <Row
               key={item.id}

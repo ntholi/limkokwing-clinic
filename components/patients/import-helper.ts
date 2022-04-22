@@ -40,6 +40,7 @@ function patientsFromCSV(csv: string): Patient[] {
         lastName,
         dateOfBirth,
         gender,
+        phoneNumber: '',
         occupation: 'Student',
       });
     }
