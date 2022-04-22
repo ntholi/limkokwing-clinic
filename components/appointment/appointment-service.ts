@@ -4,7 +4,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   onSnapshot,
   query,
@@ -73,7 +72,9 @@ export const updateAppointment = async (
   if (appointment.nextAppointment && time) {
     appointment.nextAppointment.setHours(time.getHours(), time.getMinutes());
   }
-  await updateDoc(doc(firestore, 'appointments', id), { ...appointment });
+  await updateDoc(doc(firestore, 'appointments', id), {
+    ...appointment,
+  });
 };
 
 export const deleteAppointment = async (appointmentId: string | null) => {

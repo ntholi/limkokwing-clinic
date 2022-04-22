@@ -25,7 +25,6 @@ type Props = {
 
 function Form({ appointment, setOpened }: Props) {
   const { user } = useSession();
-  const [patientNames, setPatientNames] = useState<string>('');
   const [medications, setMedications] = useState<string[]>([]);
   const [nextAppointment, setAppointmentTime] = useState<Date | undefined>();
   const form = useForm<Appointment>({
@@ -36,8 +35,14 @@ function Form({ appointment, setOpened }: Props) {
       diagnosis: '',
       medication: [],
       notes: '',
+      patientName: '',
       attendedBy: user?.displayName,
       createdBy: user?.uid,
+    },
+
+    validate: {
+      patientName: (value) =>
+        value.length < 1 ? 'Please lookup patient by id first' : null,
     },
   });
 
@@ -60,7 +65,10 @@ function Form({ appointment, setOpened }: Props) {
   function lookupUpPatient() {
     getPatient(form.values['patient']).then((patient) => {
       if (patient) {
-        setPatientNames(`${patient.firstName} ${patient.lastName}`);
+        form.setFieldValue(
+          'patientName',
+          `${patient.firstName} ${patient.lastName}`
+        );
       }
     });
   }
@@ -95,11 +103,11 @@ function Form({ appointment, setOpened }: Props) {
             }
           />
           <TextInput
-            required
             label=' '
-            placeholder='Patient Names'
-            value={patientNames}
+            required
             disabled
+            placeholder='Patient Names'
+            {...form.getInputProps('patientName')}
           />
         </Group>
         <TextInput label='Diagnosis' {...form.getInputProps('diagnosis')} />
