@@ -6,10 +6,12 @@ import {
   TextInput,
   Chips,
   Chip,
+  LoadingOverlay,
 } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import React, { useEffect } from 'react';
+import { showNotification } from '@mantine/notifications';
+import React, { useEffect, useState } from 'react';
 import Patient from './patient';
 import { savePatient, updatePatient } from './patient-service';
 
@@ -18,6 +20,7 @@ type Props = {
   setOpened: (opened: boolean) => void;
 };
 function Form({ patient, setOpened }: Props) {
+  const [loading, setLoading] = useState(false);
   const form = useForm<Patient>({
     initialValues: {
       id: '',
@@ -43,13 +46,21 @@ function Form({ patient, setOpened }: Props) {
       }
       form.reset();
       setOpened(false);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.error(e);
+      showNotification({
+        title: 'Error',
+        message: e.message,
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
+      <LoadingOverlay visible={loading} />
       <Stack>
         <TextInput
           required

@@ -87,7 +87,7 @@ export const deductDrugs = async (drugs: string[]) => {
       const drugDoc = await transaction.get(doc(firestore, 'inventory', drug));
       if (drugDoc.exists()) {
         const quantity = drugDoc.data().quantity - 1;
-        await transaction.set(doc(firestore, 'inventory', drug), {
+        await transaction.update(doc(firestore, 'inventory', drug), {
           quantity,
         });
       }
@@ -102,7 +102,6 @@ export const updateInventory = async (
   if (id) {
     await updateDoc(doc(firestore, 'inventory', id), {
       ...inventory,
-      id: undefined,
     });
   }
 };

@@ -2,6 +2,7 @@ import {
   ActionIcon,
   Button,
   Group,
+  LoadingOverlay,
   MultiSelect,
   Stack,
   Textarea,
@@ -17,6 +18,7 @@ import { saveAppointment, updateAppointment } from './appointment-service';
 import { getDrugs } from '../drugs/drug-service';
 import { useSession } from '../session/UserSession';
 import { DatePicker, TimeInput } from '@mantine/dates';
+import { showNotification } from '@mantine/notifications';
 
 type Props = {
   appointment?: Appointment | null;
@@ -27,6 +29,7 @@ function Form({ appointment, setOpened }: Props) {
   const { user } = useSession();
   const [medications, setMedications] = useState<string[]>([]);
   const [nextAppointment, setAppointmentTime] = useState<Date | undefined>();
+  const [loading, setLoading] = useState(false);
   const form = useForm<Appointment>({
     initialValues: {
       id: '',
@@ -74,6 +77,7 @@ function Form({ appointment, setOpened }: Props) {
   }
 
   async function handleSubmit(value: Appointment) {
+    setLoading(true);
     try {
       if (appointment) {
         await updateAppointment(appointment.id, value, nextAppointment);
@@ -82,13 +86,21 @@ function Form({ appointment, setOpened }: Props) {
       }
       form.reset();
       setOpened(false);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.error(e);
+      showNotification({
+        title: 'Error',
+        message: e.message,
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
+      <LoadingOverlay visible={loading} />
       <Stack>
         <Group>
           <TextInput

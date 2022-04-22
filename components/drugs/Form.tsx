@@ -2,6 +2,7 @@ import {
   ActionIcon,
   Button,
   Group,
+  LoadingOverlay,
   Modal,
   Select,
   Stack,
@@ -15,13 +16,14 @@ import React, { useEffect, useState } from 'react';
 import { getPatient } from '../patients/patient-service';
 import Drug from './drug';
 import { saveDrug, updateDrug } from './drug-service';
+import { showNotification } from '@mantine/notifications';
 
 type Props = {
   drug?: Drug | null;
   setOpened: (opened: boolean) => void;
 };
 function Form({ drug, setOpened }: Props) {
-  const [patientNames, setPatientNames] = useState<string>('');
+  const [loading, setLoading] = useState(false);
   const form = useForm<Drug>({
     initialValues: {
       name: '',
@@ -37,6 +39,7 @@ function Form({ drug, setOpened }: Props) {
   }, [drug]);
 
   async function handleSubmit(value: Drug) {
+    setLoading(true);
     try {
       if (drug) {
         await updateDrug(drug.id, value);
@@ -45,13 +48,21 @@ function Form({ drug, setOpened }: Props) {
       }
       form.reset();
       setOpened(false);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.error(e);
+      showNotification({
+        title: 'Error',
+        message: e.message,
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
+      <LoadingOverlay visible={loading} />
       <Stack>
         <TextInput label='Name' {...form.getInputProps('name')} required />
         <TextInput label='Size' {...form.getInputProps('size')} />

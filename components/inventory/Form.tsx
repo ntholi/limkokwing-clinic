@@ -1,12 +1,14 @@
 import {
   Button,
   Group,
+  LoadingOverlay,
   NumberInput,
   Select,
   Stack,
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
 import React, { useEffect, useState } from 'react';
 import Drug, { drugAsString, drugFromString } from '../drugs/drug';
 import { getDrugs } from '../drugs/drug-service';
@@ -19,6 +21,7 @@ type Props = {
 };
 function Form({ inventory, setOpened }: Props) {
   const [drugs, setDrugs] = useState<Drug[]>([]);
+  const [loading, setLoading] = useState(false);
 
   function getDrug(name: string) {
     const drug = drugFromString(name);
@@ -51,13 +54,21 @@ function Form({ inventory, setOpened }: Props) {
       }
       form.reset();
       setOpened(false);
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.error(e);
+      showNotification({
+        title: 'Error',
+        message: e.message,
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
+      <LoadingOverlay visible={loading} />
       <Stack>
         <Select
           label='Drug'
