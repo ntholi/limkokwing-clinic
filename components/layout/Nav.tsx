@@ -18,14 +18,14 @@ function Nav() {
   const [index, setIndex] = React.useState(0);
   const [active, inactive] = ['#FAFAFA', '#757575'];
 
-  function handleClick(index: number) {
-    router.push(`/${paths[index]}`);
+  function handleClick(i: number) {
+    router.push(`/${paths[i]}`);
   }
 
   useEffect(() => {
     const path = router.pathname.split('/')[1];
-    const index = paths.indexOf(path);
-    setIndex(index);
+    const i = paths.indexOf(path);
+    setIndex(i);
   }, [router.pathname]);
 
   return (

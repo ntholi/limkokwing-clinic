@@ -1,16 +1,7 @@
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Modal,
-  Paper,
-  Text,
-  UnstyledButton,
-} from '@mantine/core';
+import { ActionIcon, Group } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 import { MdDelete, MdEdit } from 'react-icons/md';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { getConfirmDeleteProps } from '../utils/modal-helper';
 import Drug from './drug';
 import { deleteDrug } from './drug-service';
@@ -23,7 +14,6 @@ type Props = {
 
 function Row({ item, setDrug, setOpenForm }: Props) {
   const modals = useModals();
-  const router = useRouter();
 
   function handleEdit() {
     if (setDrug && setOpenForm) {

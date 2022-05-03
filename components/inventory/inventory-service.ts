@@ -65,7 +65,7 @@ export const saveInventory = async (
     if (drug.exists()) {
       quantity = drug.data().quantity + inventory.quantity;
     }
-    await transaction.set(doc(firestore, 'inventory', drugId), {
+    transaction.set(doc(firestore, 'inventory', drugId), {
       drugName: inventory.drugName,
       quantity,
     });
@@ -89,7 +89,7 @@ export const deductDrugs = async (drugs: string[]) => {
       const drugDoc = await transaction.get(doc(firestore, 'inventory', drug));
       if (drugDoc.exists()) {
         const quantity = drugDoc.data().quantity - 1;
-        await transaction.update(doc(firestore, 'inventory', drug), {
+        transaction.update(doc(firestore, 'inventory', drug), {
           quantity,
         });
       }
@@ -112,4 +112,13 @@ export const deleteInventory = async (inventoryId: string | null) => {
   if (inventoryId) {
     await deleteDoc(doc(firestore, 'inventory', inventoryId));
   }
+};
+
+export const deleteInventoryRecord = async (
+  drugId: string,
+  recordId: string
+) => {
+  if (!recordId || !drugId) return;
+
+  await deleteDoc(doc(firestore, 'inventory', drugId, 'records', recordId));
 };
